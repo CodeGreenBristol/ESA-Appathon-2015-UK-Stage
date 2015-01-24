@@ -1,0 +1,49 @@
+{
+  
+  "rice": {
+    "preftemp": "24",
+    "tempsens": "0.4",
+    "prefhum": "90",
+    "humsens": "0.4",
+    "lumsens": "0.2",
+    "prod" : "3.2658",
+    "symbol" : "RRK15.CBT"
+  },
+  "wheat": {
+    "preftemp": "20",
+    "tempsens": "0.3",
+    "prefhum": "40",
+    "humsens": "0.1",
+    "lumsens": "0.4",
+    "prod" : "2.1772",
+    "symbol" : "KWH15.CBT"
+  },
+  "soybean": {
+    "preftemp": "22",
+    "tempsens": "0.2",
+    "prefhum": "70",
+    "humsens": "0.3",
+    "lumsens": "0.3",
+    "prod" : "1.18",
+    "symbol" : "SH15.CBT"
+  },
+  "corn": {
+    "preftemp": "25",
+    "tempsens": "0.5",
+    "prefhum": "40",
+    "humsens": "0.3",
+    "lumsens": "0.4",
+    "prod" : "2.81",
+    "symbol" : "CH15.CBT"
+  },
+  "oats": {
+    "preftemp": "24",
+    "tempsens": "0.2",
+    "prefhum": "50",
+    "humsens": "0.3",
+    "lumsens": "0.3",
+    "prod" : "1.08",
+    "symbol" : "OK15.CBT"
+  }
+  
+}
