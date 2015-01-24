@@ -57,8 +57,31 @@
                 drawingManager.setDrawingMode(null);
                 var coordinates = (polygon.getPath().getArray());
                 console.log(coordinates);
-
                 currentPolygon = polygon;
+                var i;
+                var lon=0.0;
+                var lat=0.0;
+                for(i=0;i<coordinates.length;i++){
+                    var temp=coordinates[i];
+                     lat=lat+ temp["k"];
+                     lon=lon+ temp["D"];
+                }
+                lat=lat/i;
+                lon=lon/i;
+                console.log(lat);
+                console.log(lon);
+                var tmpurl="https://api.forecast.io/forecast/9ac2823be7891b91dfcac3cf3b2395e3/"+lat.toString()+","+lon.toString();
+                console.log(tmpurl);
+                $.ajax({
+                    url: tmpurl,
+                    dataType: "jsonp",
+                    success: function (data) {
+                    console.log(data);
+                    }
+            });
+            
+            console.log((google.maps.geometry.spherical.computeArea(polygon.getPath())/4046.9).toFixed(2));
+
             });
         
             google.maps.event.addListenerOnce(map, 'idle', function(){
