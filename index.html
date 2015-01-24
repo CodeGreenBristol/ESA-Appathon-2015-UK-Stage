@@ -19,7 +19,63 @@
         <div id="popup-close">DISMISS</div>
     </div>
     <div id="insight-container">
-    
+		<div id = "insight-title">Insights</div>
+		<div class = "subcategory-title">AREA STATS</div>
+		<ul class = "stats">
+			<li>
+				<span class = "stats-number">277</span> 
+				<span class = "stats-unit">ha</span>
+				<span class = "stats-description">ARABLE LAND</span>
+			</li>
+			<li>
+				<span class = "stats-number">63</span> 
+				<span class = "stats-unit">%</span>
+				<span class = "stats-description">AVG. RELATIVE HUMIDITY</span>
+			</li>
+			<li>
+				<span class = "stats-number">15</span> 
+				<span class = "stats-unit-top">°C</span>
+				<span class = "stats-description">AVG. TEMPERATURE</span>
+			</li>
+			<li>
+				<img class = "stats-bullet" src = "assets/icon_green.png" alt = "Green Icon" />
+				<span class = "stats-number">Low</span> 
+				<span class = "stats-description">CLOUD COVER</span>
+			</li>
+			<li>
+				<img class = "stats-bullet" src = "assets/icon_green.png" alt = "Green Icon" />
+				<span class = "stats-number">Good</span> 
+				<span class = "stats-description">AIR QUALITY</span>
+			</li>
+			<li>
+				<span class = "stats-number">132</span> 
+				<span class = "stats-unit">m</span>
+				<span class = "stats-description">ELEVATION</span>
+			</li>
+		</ul>
+		<div class = "subcategory-title">SUGGESTED CROPS
+			<span class = "subcategory-description">based on area stats</span>
+		</div>
+		<ul class = "stats">
+			<li>
+				<span class = "estimate-yield">Est. yield <br /> (tons/ha)</span>
+				<span class = "estimate-revenue">Est. revenue <br /> (USD)</span>
+			</li>
+			<li>
+				<span class = "crop-type">Barley</span>
+				<span class = "yield-number">2.9</span> 
+				<span class = "revenue-number">214k</span> 				
+			</li>
+			<li>
+				<span class = "crop-type">Wheat</span>
+				<span class = "yield-number">3.3</span> 
+				<span class = "revenue-number">201k</span> 				
+			</li>
+			<li>
+				<span class = "crop-type">Rye</span>
+				<span class = "yield-number">2.1</span> 
+				<span class = "revenue-number">122k</span> 				
+			</li>   
     </div>
     <div id="map-canvas">
     </div>
@@ -103,6 +159,7 @@
                 
                 var coordinates = (polygon.getPath().getArray());
                 console.log(coordinates);
+<<<<<<< HEAD
                 
                 if(!currentPolygon){
                     $('#initial-popup').fadeOut();
@@ -113,6 +170,33 @@
                 currentPolygon = polygon;
                 
                 
+=======
+                currentPolygon = polygon;
+                var i;
+                var lon=0.0;
+                var lat=0.0;
+                for(i=0;i<coordinates.length;i++){
+                    var temp=coordinates[i];
+                     lat=lat+ temp["k"];
+                     lon=lon+ temp["D"];
+                }
+                lat=lat/i;
+                lon=lon/i;
+                console.log(lat);
+                console.log(lon);
+                var tmpurl="https://api.forecast.io/forecast/9ac2823be7891b91dfcac3cf3b2395e3/"+lat.toString()+","+lon.toString();
+                console.log(tmpurl);
+                $.ajax({
+                    url: tmpurl,
+                    dataType: "jsonp",
+                    success: function (data) {
+                    console.log(data);
+                    }
+            });
+            
+            console.log((google.maps.geometry.spherical.computeArea(polygon.getPath())/4046.9).toFixed(2));
+
+>>>>>>> 200597b2bc547fed85445098adc4d475e8b0b27b
             });
             
             

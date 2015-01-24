@@ -47,8 +47,106 @@ body {
   height: 100%;
   float: left;
 }
+ul {
+  padding: 0px;
+}
 #insight-container {
-  width: 0px;
+  width: 350px;
+  overflow-y: auto;
+}
+#insight-container #insight-title {
+  font-family: Open Sans;
+  font-weight: 400;
+  font-size: 25px;
+  text-align: left;
+  padding: 30px 0 0 30px;
+}
+#insight-container .subcategory-title {
+  font-family: Open Sans;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 15px 30px 15px 30px;
+  text-align: left;
+}
+#insight-container .subcategory-title .subcategory-description {
+  font-family: Open Sans;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: left;
+  padding-left: 10px;
+}
+#insight-container .stats {
+  list-style: none;
+}
+#insight-container .stats li {
+  text-align: right;
+  font-family: Open Sans;
+  margin-top: 10px;
+}
+#insight-container .stats li .stats-number {
+  font-weight: 700;
+  font-size: 30px;
+}
+#insight-container .stats li .stats-unit,
+#insight-container .stats li .stats-unit-top {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: -2px;
+}
+#insight-container .stats li .stats-unit-top {
+  vertical-align: top;
+  margin-top: 4px;
+}
+#insight-container .stats li .stats-description {
+  display: inline-block;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 300;
+  width: 210px;
+  padding-left: 20px;
+}
+#insight-container .stats li .stats-bullet {
+  vertical-align: top;
+  margin-top: 17px;
+  margin-right: 1px;
+  display: inline-block;
+  padding-bottom: 3px;
+}
+#insight-container .stats li .estimate-yield,
+#insight-container .stats li .estimate-revenue,
+#insight-container .stats li .yield-number,
+#insight-container .stats li .revenue-number {
+  display: inline-block;
+  width: 80px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 500;
+  padding-right: 25px;
+}
+#insight-container .stats li .revenue-number {
+  font-weight: 700;
+  font-size: 30px;
+}
+#insight-container .stats li .revenue-number,
+#insight-container .stats li .estimate-revenue {
+  padding-right: 30px;
+}
+#insight-container .stats li .yield-number {
+  padding-right: 28px;
+}
+#insight-container .stats li .crop-type {
+  vertical-align: top;
+  margin-top: 7px;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: right;
+  padding-right: 20px;
+}
+#insight-container .stats li .yield-number {
+  font-weight: 700;
+  font-size: 30px;
 }
 #map-canvas {
   width: 100%;
