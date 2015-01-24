@@ -16,7 +16,8 @@
     <div id="insight-container">
     
     </div>
-    <div id="map-canvas"></div>
+    <div id="map-canvas">
+    </div>
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script>
@@ -29,22 +30,53 @@
                 center: new google.maps.LatLng(49.00, 32.00),
                 zoom: 6,
                 disableDefaultUI: true,
-                zoomControl: true,
+                //zoomControl: true,
                 mapTypeControl: true,
                 zoomControlOptions: { style: google.maps.ZoomControlStyle.SMALL }
             };
         
             map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        
+            
+            var zoomControls = document.createElement('div');
+            var zoomControlsIn = document.createElement('div');
+            var zoomControlsOut = document.createElement('div');
+            zoomControls.id = "zoom-controls";
+            zoomControlsIn.id = "zoom-in";
+            zoomControlsOut.id = "zoom-out";
+            zoomControlsIn.innerHTML = '<img src="img/zoom-in.png" alt="Zoom in" title="Zoom in" />';
+            zoomControlsOut.innerHTML = '<img src="img/zoom-out.png" alt="Zoom out" title="Zoom out" />';
+            zoomControls.appendChild(zoomControlsIn);
+            zoomControls.appendChild(zoomControlsOut);
+            
+            google.maps.event.addDomListener(zoomControlsIn, 'click', function(){
+                if(map.getZoom() != 21) map.setZoom(map.getZoom() + 1);
+            });
+            
+            google.maps.event.addDomListener(zoomControlsOut, 'click', function(){
+                if(map.getZoom() != 0) map.setZoom(map.getZoom() - 1);
+            });
+            
+            zoomControls.index = 1;
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(zoomControls);
+            
+            var drawControls = document.createElement('div');
+            var drawControlsPan = document.createElement('div');
+            var drawControlsDraw = document.createElement('div');
+            drawControls.id = "draw-controls";
+            drawControlsPan.id = "draw-controls-pan";
+            drawControlsPan.className = "active";
+            drawControlsDraw.id = "draw-controls-draw";
+            drawControlsPan.innerHTML = '<img src="img/pan.png" alt="Pan" title="Pan map" />';
+            drawControlsDraw.innerHTML = '<img src="img/draw.png" alt="Draw" title="Draw a shape" />';
+            drawControls.appendChild(drawControlsPan);
+            drawControls.appendChild(drawControlsDraw);
+            
+            drawControls.index = 1;
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(drawControls);
+            
             drawingManager = new google.maps.drawing.DrawingManager({
                 drawingMode: null,
-                drawingControl: true,
-                drawingControlOptions: {
-                  position: google.maps.ControlPosition.TOP_LEFT,
-                  drawingModes: [
-                    google.maps.drawing.OverlayType.POLYGON
-                  ]
-                },
+                drawingControl: false,
                 polygonOptions: {
                     fillColor: "#7092ff",
                     fillOpacity: 0.35,
@@ -54,21 +86,40 @@
             });
             drawingManager.setMap(map);
             google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+            
                 drawingManager.setDrawingMode(null);
+                $('#draw-controls-draw').removeClass('active');
+                $('#draw-controls-pan').addClass('active');
+                
                 var coordinates = (polygon.getPath().getArray());
                 console.log(coordinates);
 
                 currentPolygon = polygon;
+                
+                
             });
-        
+            
+            
             google.maps.event.addListenerOnce(map, 'idle', function(){
-                $('div[title="Draw a shape"]').click(function(){
+                $('#draw-controls-draw').click(function(){
                     if(currentPolygon) currentPolygon.setMap(null);
                 });
             });
         }
         
         google.maps.event.addDomListener(window, 'load', initialize);
+        
+        $('#map-canvas').on('click', '#draw-controls-draw', function(){
+            drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+            $(this).addClass('active');
+            $('#draw-controls-pan').removeClass("active");
+        });
+        
+        $('#map-canvas').on('click', '#draw-controls-pan', function(){
+            drawingManager.setDrawingMode(null);
+            $(this).addClass('active');
+            $('#draw-controls-draw').removeClass("active");
+        });
         
     </script>
   </body>

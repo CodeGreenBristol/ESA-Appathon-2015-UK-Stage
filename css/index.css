@@ -18,3 +18,32 @@ body {
 #map-canvas {
   width: calc(100% - 350px);
 }
+#map-canvas #zoom-controls,
+#map-canvas #draw-controls {
+  background: #fff;
+  margin-top: 20px;
+  margin-left: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.17);
+}
+#map-canvas #draw-controls {
+  margin-top: 110px;
+  margin-left: -32px;
+}
+#map-canvas #zoom-in,
+#map-canvas #zoom-out,
+#map-canvas #draw-controls-draw,
+#map-canvas #draw-controls-pan {
+  padding: 10px;
+  padding-bottom: 8px;
+  cursor: pointer;
+}
+#map-canvas #zoom-in.active,
+#map-canvas #zoom-out.active,
+#map-canvas #draw-controls-draw.active,
+#map-canvas #draw-controls-pan.active {
+  background: #eee;
+}
+#map-canvas #zoom-in,
+#map-canvas #draw-controls-pan {
+  border-bottom: 1px solid #eee;
+}
