@@ -13,6 +13,11 @@
         <link rel="stylesheet" type="text/css" href="css/index.css">       
   </head>
   <body>
+    <div id="initial-popup">
+        <div id="popup-header">Welcome!</div>
+        <div id="popup-text">Tap the Draw icon and outline the area you'd like insights on to get started.</div>
+        <div id="popup-close">DISMISS</div>
+    </div>
     <div id="insight-container">
     
     </div>
@@ -21,6 +26,11 @@
     <script src="js/jquery-1.11.2.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script>
+    
+        $('#popup-close').click(function(){
+            $(this).parent().fadeOut();
+        });
+        
         var drawingManager;
         var currentPolygon;
         var map;
@@ -93,7 +103,13 @@
                 
                 var coordinates = (polygon.getPath().getArray());
                 console.log(coordinates);
-
+                
+                if(!currentPolygon){
+                    $('#initial-popup').fadeOut();
+                    $('#map-canvas').animate({width: $(window).width() - 350 + "px"}, 500);
+                    $('#insight-container').animate({width: "350px"}, 500);
+                }
+                
                 currentPolygon = polygon;
                 
                 

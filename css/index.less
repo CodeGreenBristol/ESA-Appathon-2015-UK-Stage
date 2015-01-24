@@ -8,18 +8,53 @@ html, body {
     clear:both;
 }
 
+#initial-popup {
+    position:fixed;
+    left:50%;
+    top:50%;
+    width:320px;
+    height:165px;
+    margin-top:-82px;
+    margin-left:-160px;
+    background:#fff;
+    box-shadow:0px 0px 5px rgba(0,0,0,0.17);
+    font-family:"Open Sans", sans-serif;
+    z-index:1000;
+    #popup-header {
+        font-weight:400;
+        font-size:16px;
+        padding:20px 20px 15px;
+    }
+    #popup-text {
+        font-weight:300;
+        font-size:16px;
+        padding:0px 20px 25px;
+    }
+    #popup-close {
+        background:#7092ff;
+        color:#fff;
+        font-weight:300;
+        font-size:14px;
+        text-align:center;
+        padding:10px;
+        cursor:pointer;
+        &:hover {
+            background:darken(#7092ff, 2%);
+        }
+    }
+}
+
 #insight-container, #map-canvas {
     height:100%;
     float:left;
 }
 
 #insight-container {
-    width:350px;
+    width:0px;
 }
 
-
 #map-canvas {
-    width:~"calc(100% - 350px)";
+    width:100%;
     #zoom-controls, #draw-controls {
         background:#fff;
         margin-top:20px;
