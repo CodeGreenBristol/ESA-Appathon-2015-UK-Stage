@@ -63,8 +63,8 @@
             </div>
             <ul id="crop-div" class="stats">
                 <li>
-                    <span class="estimate-yield">Est. yield <br /> (tons/ha)</span>
-                    <span class="estimate-revenue">Est. revenue <br /> (USD)</span>
+                    <span class="estimate-yield">Est. yield <br /><img src="img/sort-down.png" alt="Sort" /> (tons/ha)</span>
+                    <span class="estimate-revenue active">Est. revenue <br /><img src="img/sort-down.png" alt="Sort" /> (USD)</span>
                 </li>
             </ul>
         </div>
@@ -367,6 +367,24 @@
         
         $(window).on("resize",function(){
             if(currentPolygon) $('#map-canvas').css("width", $(window).width() - 320 +"px");
+        });
+        
+        $('.estimate-yield').click(function(){
+            if(!$(this).hasClass('active')){
+                $(this).addClass("active");
+                $('.estimate-revenue').removeClass("active");
+                sortCropsBy = "yield";
+                updateCrops();
+            }
+        });
+        
+        $('.estimate-revenue').click(function(){
+            if(!$(this).hasClass('active')){
+                $(this).addClass("active");
+                $('.estimate-yield').removeClass("active");
+                sortCropsBy = "revenue";
+                updateCrops();
+            }
         });
         
     </script>

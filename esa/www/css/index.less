@@ -186,6 +186,19 @@ ul {
 				font-weight: 700;
 				font-size: 30px;
 			}
+            .estimate-yield, .estimate-revenue {
+                cursor:pointer;
+                &:not(.active){
+                    img {
+                        display:none;
+                    }
+                    &:hover {
+                        img {
+                            display:inline-block;
+                        }
+                    }
+                }
+            }           
 		}
 	}
 }
