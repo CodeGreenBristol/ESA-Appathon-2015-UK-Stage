@@ -27,33 +27,33 @@
             <div id="insight-title">Insights</div>
             <div class="subcategory-title">AREA STATS</div>
             <ul class="stats">
-                <li>
-                    <span class="stats-number">277</span> 
+                <li id="arable">
+                    <span class="stats-number"></span> 
                     <span class="stats-unit">ha</span>
                     <span class="stats-description">ARABLE LAND</span>
                 </li>
-                <li>
-                    <span class="stats-number">63</span> 
+                <li id="humidity">
+                    <span class="stats-number"></span> 
                     <span class="stats-unit">%</span>
                     <span class="stats-description">AVG. RELATIVE HUMIDITY</span>
                 </li>
-                <li>
-                    <span class="stats-number">15</span> 
+                <li id="temp">
+                    <span class="stats-number"></span> 
                     <span class="stats-unit-top">°C</span>
                     <span class="stats-description">AVG. TEMPERATURE</span>
                 </li>
-                <li>
-                    <img class="stats-bullet" src = "img/icon_green.png" alt = "Green Icon" />
-                    <span class="stats-number">Low</span> 
+                <li id="cloud">
+                    <img class="stats-bullet" alt="Icon indicator" />
+                    <span class="stats-number"></span> 
                     <span class="stats-description">CLOUD COVER</span>
                 </li>
-                <li>
-                    <img class="stats-bullet" src = "img/icon_green.png" alt = "Green Icon" />
-                    <span class="stats-number">Good</span> 
+                <li id="air">
+                    <img class="stats-bullet" alt="Icon indicator" />
+                    <span class="stats-number"></span> 
                     <span class="stats-description">AIR QUALITY</span>
                 </li>
-                <li>
-                    <span class="stats-number">132</span> 
+                <li id="wind">
+                    <span class="stats-number"></span> 
                     <span class="stats-unit">m/s</span>
                     <span class="stats-description">AVG. WINDSPEED</span>
                 </li>
@@ -109,13 +109,27 @@
                 if(index == 3) return false;
                 $('#crop-div').append('<li class="crop-li"><span class="crop-type">' + val[0] + '</span><span class="yield-number">' + val[1] + '</span> <span class="revenue-number">' + val[2] + 'k</span></li>');
             });
+            
+            $('#arable .stats-number').text(area);
+            $('#humidity .stats-number').text((hum * 100).toFixed(0));
+            $('#temp .stats-number').text(temperature.toFixed(1));
+            $('#wind .stats-number').text(windspeed.toFixed(1));
+            
+            if(lum < 0.33) { $('#cloud .stats-number').text("Low"); $('#cloud .stats-bullet').attr("src", "img/icon-green.png"); }
+            else if(lum < 0.66) { $('#cloud .stats-number').text("Avg"); $('#cloud .stats-bullet').attr("src", "img/icon-orange.png"); }
+            else { $('#cloud .stats-number').text("High"); $('#cloud .stats-bullet').attr("src", "img/icon-red.png"); }
+            
+            if(airquality > 340) { $('#air .stats-number').text("Bad"); $('#air .stats-bullet').attr("src", "img/icon-red.png"); }
+            else if(airquality > 290) { $('#air .stats-number').text("Avg"); $('#air .stats-bullet').attr("src", "img/icon-orange.png"); }
+            else { $('#air .stats-number').text("Good"); $('#air .stats-bullet').attr("src", "img/icon-green.png"); }
+         
         }
+        
+        var hum, temperature, lum, area, windspeed, airquality;
         
         function initialize() {
 
-            var hum, temperature, lum, area, windspeed, airquality;
-
-            var mapOptions = {
+        var mapOptions = {
                 center: new google.maps.LatLng(51.59,-1.27),
                 zoom: 14,
                 disableDefaultUI: true
@@ -217,9 +231,9 @@
                     var tempsens = parseFloat(crop["tempsens"]);
                     var humsens = parseFloat(crop["humsens"]);
                     var lumsens = parseFloat(crop["lumsens"]);
-                    var magic = 0.33;
+                    var magic = 0.2;
 
-                    yield[counter]=((production-tempdiff*magic*tempsens*production
+                    yield[counter]=Math.abs((production-tempdiff*magic*tempsens*production
                                     -humdiff*magic*humsens*production-
                                     lumdiff*magic*lumsens*production)*area).toFixed(1);
                     counter++;
