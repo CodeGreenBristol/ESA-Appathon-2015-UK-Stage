@@ -10,7 +10,8 @@
 		<link rel="shortcut icon" type="image/png" href="" />
 		<!-- PAGE CSS -->
         <link rel="stylesheet" type="text/css" href="css/fonts.css">
-        <link rel="stylesheet" type="text/css" href="css/index.css">       
+        <link rel="stylesheet" type="text/css" href="css/index.css">      
+        <link rel="stylesheet" type="text/css" href="css/perfect-scrollbar.min.css">    
   </head>
   <body>
     <div id="initial-popup">
@@ -19,70 +20,77 @@
         <div id="popup-close">DISMISS</div>
     </div>
     <div id="insight-container">
-		<div id = "insight-title">Insights</div>
-		<div class = "subcategory-title">AREA STATS</div>
-		<ul class = "stats">
-			<li>
-				<span class = "stats-number">277</span> 
-				<span class = "stats-unit">ha</span>
-				<span class = "stats-description">ARABLE LAND</span>
-			</li>
-			<li>
-				<span class = "stats-number">63</span> 
-				<span class = "stats-unit">%</span>
-				<span class = "stats-description">AVG. RELATIVE HUMIDITY</span>
-			</li>
-			<li>
-				<span class = "stats-number">15</span> 
-				<span class = "stats-unit-top">°C</span>
-				<span class = "stats-description">AVG. TEMPERATURE</span>
-			</li>
-			<li>
-				<img class = "stats-bullet" src = "assets/icon_green.png" alt = "Green Icon" />
-				<span class = "stats-number">Low</span> 
-				<span class = "stats-description">CLOUD COVER</span>
-			</li>
-			<li>
-				<img class = "stats-bullet" src = "assets/icon_green.png" alt = "Green Icon" />
-				<span class = "stats-number">Good</span> 
-				<span class = "stats-description">AIR QUALITY</span>
-			</li>
-			<li>
-				<span class = "stats-number">132</span> 
-				<span class = "stats-unit">m</span>
-				<span class = "stats-description">ELEVATION</span>
-			</li>
-		</ul>
-		<div class = "subcategory-title">SUGGESTED CROPS
-			<span class = "subcategory-description">based on area stats</span>
-		</div>
-		<ul class = "stats">
-			<li>
-				<span class = "estimate-yield">Est. yield <br /> (tons/ha)</span>
-				<span class = "estimate-revenue">Est. revenue <br /> (USD)</span>
-			</li>
-			<li>
-				<span class = "crop-type">Barley</span>
-				<span class = "yield-number">2.9</span> 
-				<span class = "revenue-number">214k</span> 				
-			</li>
-			<li>
-				<span class = "crop-type">Wheat</span>
-				<span class = "yield-number">3.3</span> 
-				<span class = "revenue-number">201k</span> 				
-			</li>
-			<li>
-				<span class = "crop-type">Rye</span>
-				<span class = "yield-number">2.1</span> 
-				<span class = "revenue-number">122k</span> 				
-			</li>   
+        <div id="loading-container"><img src="img/loading.gif" alt="Loading" /><br />LOADING...</div>
+        <div id="insight-container-inner">
+            <div id = "insight-title">Insights</div>
+            <div class = "subcategory-title">AREA STATS</div>
+            <ul class = "stats">
+                <li>
+                    <span class = "stats-number">277</span> 
+                    <span class = "stats-unit">ha</span>
+                    <span class = "stats-description">ARABLE LAND</span>
+                </li>
+                <li>
+                    <span class = "stats-number">63</span> 
+                    <span class = "stats-unit">%</span>
+                    <span class = "stats-description">AVG. RELATIVE HUMIDITY</span>
+                </li>
+                <li>
+                    <span class = "stats-number">15</span> 
+                    <span class = "stats-unit-top">°C</span>
+                    <span class = "stats-description">AVG. TEMPERATURE</span>
+                </li>
+                <li>
+                    <img class = "stats-bullet" src = "img/icon_green.png" alt = "Green Icon" />
+                    <span class = "stats-number">Low</span> 
+                    <span class = "stats-description">CLOUD COVER</span>
+                </li>
+                <li>
+                    <img class = "stats-bullet" src = "img/icon_green.png" alt = "Green Icon" />
+                    <span class = "stats-number">Good</span> 
+                    <span class = "stats-description">AIR QUALITY</span>
+                </li>
+                <li>
+                    <span class = "stats-number">132</span> 
+                    <span class = "stats-unit">m</span>
+                    <span class = "stats-description">ELEVATION</span>
+                </li>
+            </ul>
+            <div class = "subcategory-title">SUGGESTED CROPS
+                <span class = "subcategory-description">based on area stats</span>
+            </div>
+            <ul class = "stats">
+                <li>
+                    <span class = "estimate-yield">Est. yield <br /> (tons/ha)</span>
+                    <span class = "estimate-revenue">Est. revenue <br /> (USD)</span>
+                </li>
+                <li>
+                    <span class = "crop-type">Barley</span>
+                    <span class = "yield-number">2.9</span> 
+                    <span class = "revenue-number">214k</span> 				
+                </li>
+                <li>
+                    <span class = "crop-type">Wheat</span>
+                    <span class = "yield-number">3.3</span> 
+                    <span class = "revenue-number">201k</span> 				
+                </li>
+                <li>
+                    <span class = "crop-type">Rye</span>
+                    <span class = "yield-number">2.1</span> 
+                    <span class = "revenue-number">122k</span> 				
+                </li>
+            </ul>
+        </div>
     </div>
     <div id="map-canvas">
     </div>
     <script src="js/jquery-1.11.2.min.js"></script>
+    <script src="js/perfect-scrollbar.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script>
-    
+        
+        $('#insight-container').perfectScrollbar();
+        
         $('#popup-close').click(function(){
             $(this).parent().fadeOut();
         });
@@ -97,7 +105,7 @@
                 zoom: 6,
                 disableDefaultUI: true,
                 //zoomControl: true,
-                mapTypeControl: true,
+                //mapTypeControl: true,
                 zoomControlOptions: { style: google.maps.ZoomControlStyle.SMALL }
             };
         
@@ -140,6 +148,21 @@
             drawControls.index = 1;
             map.controls[google.maps.ControlPosition.TOP_LEFT].push(drawControls);
             
+            var mapControls = document.createElement('div');
+            var mapControlsMap = document.createElement('span');
+            var mapControlsSatellite = document.createElement('span');
+            mapControls.id = "map-controls";
+            mapControlsMap.id = "map-controls-map";
+            mapControlsMap.className = "active";
+            mapControlsSatellite.id = "map-controls-satellite";
+            mapControlsMap.innerHTML = 'MAP';
+            mapControlsSatellite.innerHTML = 'SATELLITE';
+            mapControls.appendChild(mapControlsMap);
+            mapControls.appendChild(mapControlsSatellite);
+            
+            mapControls.index = 1;
+            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(mapControls);
+            
             drawingManager = new google.maps.drawing.DrawingManager({
                 drawingMode: null,
                 drawingControl: false,
@@ -159,19 +182,18 @@
                 
                 var coordinates = (polygon.getPath().getArray());
                 console.log(coordinates);
-<<<<<<< HEAD
                 
-                if(!currentPolygon){
-                    $('#initial-popup').fadeOut();
+                if(!currentPolygon){                   
                     $('#map-canvas').animate({width: $(window).width() - 350 + "px"}, 500);
-                    $('#insight-container').animate({width: "350px"}, 500);
+                    $('#loading-container').fadeIn();
+                    $('#insight-container').animate({width: "350px"}, 500, function(){
+                        setTimeout(function(){ $('#loading-container').fadeOut(200); $('#insight-container-inner').fadeIn(500) }, 1500);
+                    });
+                    
                 }
                 
                 currentPolygon = polygon;
                 
-                
-=======
-                currentPolygon = polygon;
                 var i;
                 var lon=0.0;
                 var lat=0.0;
@@ -196,22 +218,16 @@
             
             console.log((google.maps.geometry.spherical.computeArea(polygon.getPath())/4046.9).toFixed(2));
 
->>>>>>> 200597b2bc547fed85445098adc4d475e8b0b27b
-            });
-            
-            
-            google.maps.event.addListenerOnce(map, 'idle', function(){
-                $('#draw-controls-draw').click(function(){
-                    if(currentPolygon) currentPolygon.setMap(null);
-                });
             });
         }
         
         google.maps.event.addDomListener(window, 'load', initialize);
         
         $('#map-canvas').on('click', '#draw-controls-draw', function(){
+            if($('#initial-popup').is(':visible')){ $('#initial-popup').fadeOut(); }
             drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
             $(this).addClass('active');
+            if(currentPolygon) currentPolygon.setMap(null);
             $('#draw-controls-pan').removeClass("active");
         });
         
@@ -219,6 +235,18 @@
             drawingManager.setDrawingMode(null);
             $(this).addClass('active');
             $('#draw-controls-draw').removeClass("active");
+        });
+        
+        $('#map-canvas').on('click', '#map-controls-map', function(){
+            map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+            $(this).addClass('active');
+            $('#map-controls-satellite').removeClass("active");
+        });
+        
+        $('#map-canvas').on('click', '#map-controls-satellite', function(){
+            map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+            $(this).addClass('active');
+            $('#map-controls-map').removeClass("active");
         });
         
     </script>
