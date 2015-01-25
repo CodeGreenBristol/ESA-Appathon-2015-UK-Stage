@@ -106,8 +106,8 @@
             var hum, temperature, lum, area;
 
             var mapOptions = {
-                center: new google.maps.LatLng(49.00, 32.00),
-                zoom: 6,
+                center: new google.maps.LatLng(51.59,-1.27),
+                zoom: 14,
                 disableDefaultUI: true,
                 //zoomControl: true,
                 //mapTypeControl: true,
@@ -239,9 +239,9 @@
                 console.log(coordinates);
                 
                 if(!currentPolygon){                   
-                    $('#map-canvas').animate({width: $(window).width() - 350 + "px"}, 500);
+                $('#map-canvas').animate({width: "-=320px"}, 500);
                     $('#loading-container').fadeIn();
-                    $('#insight-container').animate({width: "350px"}, 500, function(){
+                    $('#insight-container').animate({width: "320px"}, 500, function(){
                         setTimeout(function(){ $('#loading-container').fadeOut(200); $('#insight-container-inner').fadeIn(500) }, 1500);
                     });
                     
@@ -307,6 +307,10 @@
             map.setMapTypeId(google.maps.MapTypeId.HYBRID);
             $(this).addClass('active');
             $('#map-controls-map').removeClass("active");
+        });
+        
+        $(window).on("resize",function(){
+            if(currentPolygon) $('#map-canvas').css("width", $(window).width() - 320 +"px");
         });
         
     </script>
