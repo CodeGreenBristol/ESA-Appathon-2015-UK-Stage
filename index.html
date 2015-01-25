@@ -76,7 +76,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script>
        
-        if($(window).width() == 320){
+        if($(window).width() <= 360){
             $('#map-canvas').insertBefore($('#insight-container'));
             $('#drag-down').show();
         }
@@ -270,7 +270,7 @@
                 
                 if(!currentPolygon){                 
                 
-                    if($(window).width() != 320){
+                    if($(window).width() > 360){
                         $('#map-canvas').animate({width: "-=320px"}, 500);
                         $('#loading-container').fadeIn();
                         $('#insight-container').animate({width: "320px"}, 500);
@@ -279,11 +279,12 @@
                         $('#map-canvas').animate({height: "200px"}, 500, function(){
                             $('#loading-container').fadeIn();    
                         });
+                        $('#insight-container').animate({height: $(window).height() - 200 + "px"}, 500);
                     }
                 }
                 else {                   
-                    if($(window).width() == 320){
-                        $('#map-canvas').animate({height: "200px"}, 500);
+                    if($(window).width() <= 360){
+                        $('#map-canvas').animate({height: "200px"}, 500);                        
                         $('#drag-up').hide();
                     }               
                 }
@@ -331,7 +332,7 @@
             if(currentPolygon) currentPolygon.setMap(null);
             $('#draw-controls-pan').removeClass("active");
             
-            if($(window).width() == 320 && currentPolygon){
+            if($(window).width() <= 360 && currentPolygon){
                 $('#map-canvas').animate({height: "100%"}, 500, function(){ $('#drag-up').show(); });
             }
         });

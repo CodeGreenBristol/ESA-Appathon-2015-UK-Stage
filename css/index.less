@@ -233,7 +233,7 @@ ul {
     }
 }
 
-@media (max-width:320px){
+@media (max-width:360px){
     html {
         overflow:hidden;
     }
@@ -242,10 +242,15 @@ ul {
     }
     #insight-container {
         width:320px;
-        height:calc(100%-200px);
+        height:0px;
         #loading-container {
            margin-top:75px;
         }
     }
-    
+}
+
+@media(width:320px){
+    #insight-container {
+        padding:0px 20px;
+    }
 }
