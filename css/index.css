@@ -45,6 +45,12 @@ ul {
 #initial-popup #popup-close:hover {
   background: #668aff;
 }
+@media (max-width: 320px) {
+  #initial-popup {
+    width: 280px;
+    margin-left: -140px;
+  }
+}
 #insight-container,
 #map-canvas {
   height: 100%;
@@ -105,7 +111,7 @@ ul {
 }
 #insight-container .stats li .stats-number {
   font-weight: 700;
-  font-size: 30px;
+  font-size: 27px;
 }
 #insight-container .stats li .stats-unit,
 #insight-container .stats li .stats-unit-top {
@@ -123,7 +129,7 @@ ul {
   text-align: left;
   font-size: 14px;
   font-weight: 300;
-  width: 210px;
+  width: 180px;
   padding-left: 20px;
 }
 #insight-container .stats li .stats-bullet {
@@ -142,18 +148,18 @@ ul {
   text-align: right;
   font-size: 12px;
   font-weight: 500;
-  padding-right: 25px;
+  padding-right: 23px;
 }
 #insight-container .stats li .revenue-number {
   font-weight: 700;
-  font-size: 30px;
+  font-size: 27px;
 }
 #insight-container .stats li .revenue-number,
 #insight-container .stats li .estimate-revenue {
-  padding-right: 30px;
+  padding-right: 27px;
 }
 #insight-container .stats li .yield-number {
-  padding-right: 28px;
+  padding-right: 25px;
 }
 #insight-container .stats li .crop-type {
   vertical-align: top;

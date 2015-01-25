@@ -238,8 +238,8 @@
                 var coordinates = (polygon.getPath().getArray());
                 console.log(coordinates);
                 
-                if(!currentPolygon){                   
-                $('#map-canvas').animate({width: "-=320px"}, 500);
+                if(!currentPolygon){                               
+                    $('#map-canvas').animate({width: "-=320px"}, 500);
                     $('#loading-container').fadeIn();
                     $('#insight-container').animate({width: "320px"}, 500, function(){
                         setTimeout(function(){ $('#loading-container').fadeOut(200); $('#insight-container-inner').fadeIn(500) }, 1500);
