@@ -88,18 +88,23 @@
     <script src="js/perfect-scrollbar.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script>
-        
+       
         $('#insight-container').perfectScrollbar();
         
         $('#popup-close').click(function(){
             $(this).parent().fadeOut();
         });
         
+        var cropsjson="{ \"rice\": { \"preftemp\": \"24\", \"tempsens\": \"0.4\", \"prefhum\": \"90\", \"humsens\": \"0.4\", \"lumsens\": \"0.2\", \"prod\" : \"3.2658\", \"symbol\" : \"RRK15.CBT\" }, \"wheat\": { \"preftemp\": \"20\", \"tempsens\": \"0.3\", \"prefhum\": \"40\", \"humsens\": \"0.1\", \"lumsens\": \"0.4\", \"prod\" : \"2.1772\", \"symbol\" : \"KWH15.CBT\" }, \"soybean\": { \"preftemp\": \"22\", \"tempsens\": \"0.2\", \"prefhum\": \"70\", \"humsens\": \"0.3\", \"lumsens\": \"0.3\", \"prod\" : \"1.18\", \"symbol\" : \"SH15.CBT\" }, \"corn\": { \"preftemp\": \"25\", \"tempsens\": \"0.5\", \"prefhum\": \"40\", \"humsens\": \"0.3\", \"lumsens\": \"0.4\", \"prod\" : \"2.81\", \"symbol\" : \"CH15.CBT\" }, \"oats\": { \"preftemp\": \"24\", \"tempsens\": \"0.2\", \"prefhum\": \"50\", \"humsens\": \"0.3\", \"lumsens\": \"0.3\", \"prod\" : \"1.08\", \"symbol\" : \"OK15.CBT\" } }";
         var drawingManager;
         var currentPolygon;
         var map;
             
         function initialize() {
+
+
+            var hum, temperature, lum, area;
+
             var mapOptions = {
                 center: new google.maps.LatLng(49.00, 32.00),
                 zoom: 6,
@@ -174,6 +179,56 @@
                 }
             });
             drawingManager.setMap(map);
+
+            function callbackfinished(){
+                var crops = JSON.parse(cropsjson);
+                //console.log(crops);
+                var revenue=[];
+                var yield=[];
+                var names=[];
+                var counter=0;
+                for( j in crops){
+                    names[counter]=j;
+                    console.log(j);
+                    var crop= crops[j];
+                    var production=parseFloat(crop["prod"]);
+                    var tempdiff=Math.abs(temperature-parseFloat(crop["preftemp"])/30.0);
+                    var humdiff=Math.abs(hum-parseFloat(crop["prefhum"])/100.0);
+                    var lumdiff=Math.abs(1.0 - lum);
+                    var tempsens=parseFloat(crop["tempsens"]);
+                    var humsens=parseFloat(crop["humsens"]);
+                    var lumsens=parseFloat(crop["lumsens"]);
+                    var magic=0.33;
+
+                    yield[counter]=((production-tempdiff*magic*tempsens*production
+                                    -humdiff*magic*humsens*production-
+                                    lumdiff*magic*lumsens*production)*area).toFixed(2);
+                    console.log(yield[counter]+" : "+production*area);
+                    counter++;
+                }
+
+                console.log(yield);
+                console.log(names);
+                var swapped;
+                do {
+                    swapped = false;
+
+                    for (var c = 0; c < yield.length - 1; c++) {
+                        if (yield[c] < yield[c + 1]) {
+                            var tempy = yield[c];
+                            yield[c] = yield[c + 1];
+                            yield[c + 1] = tempy;
+                            var tempname = names[c];
+                            names[c] = names[c + 1];
+                            names[c + 1] = tempname;
+                            swapped = true;
+                        }
+                    }
+                } while (swapped);
+                console.log(yield);
+                console.log(names);
+
+            }
             google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
             
                 drawingManager.setDrawingMode(null);
@@ -206,18 +261,23 @@
                 lon=lon/i;
                 console.log(lat);
                 console.log(lon);
-                var tmpurl="https://api.forecast.io/forecast/9ac2823be7891b91dfcac3cf3b2395e3/"+lat.toString()+","+lon.toString();
+                 area=(google.maps.geometry.spherical.computeArea(polygon.getPath())/4046.9).toFixed(2);
+                var tmpurl="https://api.forecast.io/forecast/9ac2823be7891b91dfcac3cf3b2395e3/"+lat.toString()+","+lon.toString()+"?units=si";
                 console.log(tmpurl);
                 $.ajax({
                     url: tmpurl,
                     dataType: "jsonp",
                     success: function (data) {
                     console.log(data);
+                    var cur=data["currently"];
+                    temperature=parseFloat(cur["temperature"]);
+                    lum=1.0-parseFloat(cur["cloudCover"]);
+                    hum=parseFloat(cur["humidity"]);
+                    console.log("temp1:"+temperature);
+                    callbackfinished();
                     }
-            });
-            
-            console.log((google.maps.geometry.spherical.computeArea(polygon.getPath())/4046.9).toFixed(2));
-
+                });
+               
             });
         }
         
