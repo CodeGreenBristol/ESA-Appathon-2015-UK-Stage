@@ -180,18 +180,72 @@
             });
             drawingManager.setMap(map);
 
+            function queryfinished(namesyield, revenuestr, yieldstr){
+                var revenue=[], yield=[], namesrevenue=namesyield;
+                for(var c=0; c<revenuestr.length; c++) {
+                    revenue[c]=parseFloat(revenuestr[c]);
+                    yield[c]=parseFloat(yieldstr[c]);
+                }
+
+
+                var namesrevenue=namesyield;
+                var swapped;
+                console.log(namesyield);
+                console.log(yield);
+                do {
+                    swapped = false;
+
+                    for (var c = 0; c < yield.length - 1; c++) {
+                        if (yield[c] < yield[c + 1]) {
+                            var tempy = yield[c];
+                            yield[c] = yield[c + 1];
+                            yield[c + 1] = tempy;
+                            var tempname = namesyield[c];
+                            namesyield[c] = namesyield[c + 1];
+                            namesyield[c + 1] = tempname;
+                            swapped = true;
+                        }
+                    }
+                } while (swapped);
+                console.log(namesyield);
+                console.log(yield);
+                console.log("\n")
+                console.log(namesrevenue);
+                console.log(revenue);
+                do {
+                    swapped = false;
+
+                    for (var c = 0; c < revenue.length - 1; c++) {
+                        if (revenue[c] < revenue[c + 1]) {
+                            var tempy = revenue[c];
+                            revenue[c] = revenue[c + 1];
+                            revenue[c + 1] = tempy;
+                            var tempname = namesrevenue[c];
+                            namesrevenue[c] = namesrevenue[c + 1];
+                            namesrevenue[c + 1] = tempname;
+                            swapped = true;
+                        }
+                    }
+                } while (swapped);
+                console.log(namesrevenue);
+                console.log(revenue);
+            }
+
             function callbackfinished(){
                 var crops = JSON.parse(cropsjson);
                 //console.log(crops);
                 var revenue=[];
                 var yield=[];
                 var names=[];
+                var symbols=[];
                 var counter=0;
+                var query="https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(";
                 for( j in crops){
                     names[counter]=j;
                     console.log(j);
                     var crop= crops[j];
                     var production=parseFloat(crop["prod"]);
+                    query=query+"%22"+crop["symbol"]+"%22%2C";
                     var tempdiff=Math.abs(temperature-parseFloat(crop["preftemp"])/30.0);
                     var humdiff=Math.abs(hum-parseFloat(crop["prefhum"])/100.0);
                     var lumdiff=Math.abs(1.0 - lum);
@@ -206,27 +260,30 @@
                     console.log(yield[counter]+" : "+production*area);
                     counter++;
                 }
+                query=query.substring(0,query.length-3)+")&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+                // console.log(query);
 
-                console.log(yield);
-                console.log(names);
-                var swapped;
-                do {
-                    swapped = false;
-
-                    for (var c = 0; c < yield.length - 1; c++) {
-                        if (yield[c] < yield[c + 1]) {
-                            var tempy = yield[c];
-                            yield[c] = yield[c + 1];
-                            yield[c + 1] = tempy;
-                            var tempname = names[c];
-                            names[c] = names[c + 1];
-                            names[c + 1] = tempname;
-                            swapped = true;
-                        }
+                 $.ajax({
+                    url: query,
+                    dataType: "jsonp",
+                    success: function (data) {
+                    //console.log(data);
+                    var one=data["query"];
+                    var two=one["results"];
+                    var three=two["quote"];
+                    console.log(three);
+                    var c=0;
+                    for(j in three){
+                        var obj = three[j];
+                        var ask=parseFloat(obj["Ask"]);
+                        revenue[c]=(ask*yield[c]/1000.0).toFixed(2);
+                        c++;
                     }
-                } while (swapped);
-                console.log(yield);
-                console.log(names);
+                    //console.log(revenue);
+                    queryfinished(names, revenue, yield);
+                    }
+                });
+
 
             }
             google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
@@ -263,7 +320,8 @@
                 console.log(lon);
                  area=(google.maps.geometry.spherical.computeArea(polygon.getPath())/4046.9).toFixed(2);
                 var tmpurl="https://api.forecast.io/forecast/9ac2823be7891b91dfcac3cf3b2395e3/"+lat.toString()+","+lon.toString()+"?units=si";
-                console.log(tmpurl);
+
+                //console.log(tmpurl);
                 $.ajax({
                     url: tmpurl,
                     dataType: "jsonp",
@@ -277,6 +335,7 @@
                     callbackfinished();
                     }
                 });
+
                
             });
         }
