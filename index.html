@@ -239,9 +239,9 @@
                 console.log(coordinates);
                 
                 if(!currentPolygon){                   
-                    $('#map-canvas').animate({width: $(window).width() - 350 + "px"}, 500);
+                    $('#map-canvas').animate({width: $(window).width() - 320 + "px"}, 500);
                     $('#loading-container').fadeIn();
-                    $('#insight-container').animate({width: "350px"}, 500, function(){
+                    $('#insight-container').animate({width: "320px"}, 500, function(){
                         setTimeout(function(){ $('#loading-container').fadeOut(200); $('#insight-container-inner').fadeIn(500) }, 1500);
                     });
                     
