@@ -1,0 +1,263 @@
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px
+}
+
+.clearfix {
+    clear:both;
+}
+
+ul {
+	padding: 0px;
+}
+
+#initial-popup {
+    position:fixed;
+    left:50%;
+    top:50%;
+    width:320px;
+    height:165px;
+    margin-top:-82px;
+    margin-left:-160px;
+    background:#fff;
+    box-shadow:0px 0px 5px rgba(0,0,0,0.17);
+    font-family:"Open Sans", sans-serif;
+    z-index:1000;
+    #popup-header {
+        font-weight:400;
+        font-size:16px;
+        padding:20px 20px 15px;
+    }
+    #popup-text {
+        font-weight:300;
+        font-size:16px;
+        padding:0px 20px 25px;
+    }
+    #popup-close {
+        background:#7092ff;
+        color:#fff;
+        font-weight:300;
+        font-size:14px;
+        text-align:center;
+        padding:10px;
+        cursor:pointer;
+        &:hover {
+            background:darken(#7092ff, 2%);
+        }
+    }
+}
+
+@media (max-width:320px) {
+	#initial-popup {
+		width: 280px;
+		margin-left: -140px;
+	}
+}
+
+#insight-container, #map-canvas {
+    height:100%;
+    float:left;
+}
+
+#drag-up, #drag-down {  
+    display:none;
+    text-align:center;
+    position:fixed;
+    padding:5px 0px 2px;
+    background:#fff;
+}
+#drag-up {
+    width:100%;
+    bottom:0;
+    z-index:1000;
+}
+#drag-down {
+    width:320px;
+}
+
+#insight-container {
+    width:0px;
+    position:relative;
+    overflow: hidden;
+    #loading-container {
+        position:fixed;
+        display:none;
+        font-family:"Open Sans", sans-serif;
+        font-weight:300;
+        font-size:14px;
+        text-align:center;
+        height:50px;
+        top:50%;
+        left:140px;
+        margin-top:-25px;
+        img {
+            margin-bottom:3px;
+        }
+    }
+    #insight-container-inner {
+        display:none; 
+        margin-bottom:40px;
+    }
+	#insight-title {
+		font-family: Open Sans;
+		font-weight: 400;
+		font-size: 25px;
+		text-align: left;
+		padding: 30px 0 0 30px;
+	}
+	.subcategory-title {
+		font-family: Open Sans;
+		font-weight: 400;
+		font-size: 14px;
+		padding: 15px 30px 15px 30px;
+		text-align: left;
+		.subcategory-description {
+			font-family: Open Sans;
+			font-weight: 400;
+			font-size: 12px;
+			text-align: left;
+			padding-left: 10px;
+		}
+	}
+	.stats {
+		list-style: none;
+		li {
+			text-align: right;
+			font-family: Open Sans;
+			margin-top: 10px;
+			.stats-number {
+				font-weight: 700;
+				font-size: 27px;
+			}
+			.stats-unit, .stats-unit-top {
+				display: inline-block;
+				font-size: 20px;
+				font-weight: 700;
+				margin-left: -2px;
+			}
+			.stats-unit-top {
+				vertical-align: top;
+				margin-top: 4px;
+			}
+			.stats-description {
+				display: inline-block;
+				text-align: left;
+				font-size: 14px;
+				font-weight: 300;
+				width: 180px;
+				padding-left: 20px;
+			}
+			.stats-bullet {
+				vertical-align: top;
+				margin-top: 17px;
+				margin-right: 3px;
+				display: inline-block;
+				padding-bottom: 3px;
+			}
+			.estimate-yield, .estimate-revenue, .yield-number, .revenue-number {
+				display: inline-block;
+				width: 80px;
+				text-align: right;
+				font-size: 12px;
+				font-weight: 500;
+				padding-right: 23px;
+			}
+			.revenue-number {
+				font-weight: 700;
+				font-size: 27px;
+			}
+			.revenue-number, .estimate-revenue {
+				padding-right: 27px;
+			}
+			.yield-number {
+				padding-right: 25px;
+			}
+			.crop-type {
+				vertical-align: top;
+				margin-top: 7px;
+				display: inline-block;
+				font-size: 20px;
+				font-weight: 700;
+				text-align: right;
+				padding-right: 20px;
+			}
+			.yield-number {
+				font-weight: 700;
+				font-size: 30px;
+			}
+		}
+	}
+}
+
+
+#map-canvas {
+    width:100%;
+    #zoom-controls, #draw-controls {
+        background:#fff;
+        margin-top:20px;
+        margin-left:20px;
+        box-shadow:0px 0px 5px rgba(0,0,0,0.25);  
+    }
+    #draw-controls {
+        margin-top:110px;
+        margin-left:-32px;
+    }
+    #zoom-in, #zoom-out, #draw-controls-draw, #draw-controls-pan {
+        padding:10px;
+        padding-bottom:8px;
+        cursor:pointer;
+        &.active {
+            background:#eee;
+        }
+    }
+    #zoom-in, #draw-controls-pan {
+        border-bottom:1px solid #eee;
+    }
+    #map-controls {
+        background:#fff;
+        margin-top:20px;
+        margin-right:20px;
+        box-shadow:0px 0px 5px rgba(0,0,0,0.25);
+        #map-controls-map, #map-controls-satellite {
+            font-family:"Open Sans", sans-serif;
+            font-weight:400;
+            font-size:14px;
+            display:inline-block;
+            padding:5px 12px;
+            cursor:pointer;
+            &.active {
+                background:#eee;
+            }
+        }
+        #map-controls-map {
+            border-right:1px solid #eee;            
+        }
+    }
+}
+
+@media (max-width:360px){
+    html {
+        overflow:hidden;
+    }
+    #insight-container, #map-canvas {
+        clear:both;
+    }
+    #insight-container {
+        width:320px;
+        height:0px;
+        #loading-container {
+           margin-top:75px;
+        }
+    }
+}
+
+@media(width:360px){
+    #insight-container {
+        width:360px;
+        #insight-container-inner {
+            width:320px;
+            margin-left:20px;
+        }
+    }
+}
