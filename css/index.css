@@ -56,6 +56,19 @@ ul {
   height: 100%;
   float: left;
 }
+#drag-up,
+#drag-down {
+  width: 100%;
+  display: none;
+  text-align: center;
+  position: fixed;
+  padding: 5px 0px 2px;
+  background: #fff;
+}
+#drag-up {
+  bottom: 0;
+  z-index: 1000;
+}
 #insight-container {
   width: 0px;
   position: relative;
@@ -227,4 +240,20 @@ ul {
 }
 #map-canvas #map-controls #map-controls-map {
   border-right: 1px solid #eee;
+}
+@media (max-width: 320px) {
+  html {
+    overflow: hidden;
+  }
+  #insight-container,
+  #map-canvas {
+    clear: both;
+  }
+  #insight-container {
+    width: 320px;
+    height: calc(-100%);
+  }
+  #insight-container #loading-container {
+    margin-top: 75px;
+  }
 }

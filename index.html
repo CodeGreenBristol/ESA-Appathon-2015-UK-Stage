@@ -19,65 +19,67 @@
         <div id="popup-text">Tap the Draw icon and outline the area you'd like insights on to get started.</div>
         <div id="popup-close">DISMISS</div>
     </div>
+    <div id="drag-up"><img src="img/pull-up.png" alt="Pull up" /></div>
     <div id="insight-container">
         <div id="loading-container"><img src="img/loading.gif" alt="Loading" /><br />LOADING...</div>
         <div id="insight-container-inner">
-            <div id = "insight-title">Insights</div>
-            <div class = "subcategory-title">AREA STATS</div>
-            <ul class = "stats">
+            <div id="drag-down"><img src="img/pull-down.png" alt="Pull down" /></div>
+            <div id="insight-title">Insights</div>
+            <div class="subcategory-title">AREA STATS</div>
+            <ul class="stats">
                 <li>
-                    <span class = "stats-number">277</span> 
-                    <span class = "stats-unit">ha</span>
-                    <span class = "stats-description">ARABLE LAND</span>
+                    <span class="stats-number">277</span> 
+                    <span class="stats-unit">ha</span>
+                    <span class="stats-description">ARABLE LAND</span>
                 </li>
                 <li>
-                    <span class = "stats-number">63</span> 
-                    <span class = "stats-unit">%</span>
-                    <span class = "stats-description">AVG. RELATIVE HUMIDITY</span>
+                    <span class="stats-number">63</span> 
+                    <span class="stats-unit">%</span>
+                    <span class="stats-description">AVG. RELATIVE HUMIDITY</span>
                 </li>
                 <li>
-                    <span class = "stats-number">15</span> 
-                    <span class = "stats-unit-top">°C</span>
-                    <span class = "stats-description">AVG. TEMPERATURE</span>
+                    <span class="stats-number">15</span> 
+                    <span class="stats-unit-top">°C</span>
+                    <span class="stats-description">AVG. TEMPERATURE</span>
                 </li>
                 <li>
-                    <img class = "stats-bullet" src = "img/icon_green.png" alt = "Green Icon" />
-                    <span class = "stats-number">Low</span> 
-                    <span class = "stats-description">CLOUD COVER</span>
+                    <img class="stats-bullet" src = "img/icon_green.png" alt = "Green Icon" />
+                    <span class="stats-number">Low</span> 
+                    <span class="stats-description">CLOUD COVER</span>
                 </li>
                 <li>
-                    <img class = "stats-bullet" src = "img/icon_green.png" alt = "Green Icon" />
-                    <span class = "stats-number">Good</span> 
-                    <span class = "stats-description">AIR QUALITY</span>
+                    <img class="stats-bullet" src = "img/icon_green.png" alt = "Green Icon" />
+                    <span class="stats-number">Good</span> 
+                    <span class="stats-description">AIR QUALITY</span>
                 </li>
                 <li>
-                    <span class = "stats-number">132</span> 
-                    <span class = "stats-unit">m</span>
-                    <span class = "stats-description">ELEVATION</span>
+                    <span class="stats-number">132</span> 
+                    <span class="stats-unit">m</span>
+                    <span class="stats-description">ELEVATION</span>
                 </li>
             </ul>
-            <div class = "subcategory-title">SUGGESTED CROPS
-                <span class = "subcategory-description">based on area stats</span>
+            <div class="subcategory-title">SUGGESTED CROPS
+                <span class="subcategory-description">based on area stats</span>
             </div>
-            <ul class = "stats">
+            <ul class="stats">
                 <li>
-                    <span class = "estimate-yield">Est. yield <br /> (tons/ha)</span>
-                    <span class = "estimate-revenue">Est. revenue <br /> (USD)</span>
+                    <span class="estimate-yield">Est. yield <br /> (tons/ha)</span>
+                    <span class="estimate-revenue">Est. revenue <br /> (USD)</span>
                 </li>
                 <li>
-                    <span class = "crop-type">Barley</span>
-                    <span class = "yield-number">2.9</span> 
-                    <span class = "revenue-number">214k</span> 				
+                    <span class="crop-type">Barley</span>
+                    <span class="yield-number">2.9</span> 
+                    <span class="revenue-number">214k</span> 				
                 </li>
                 <li>
-                    <span class = "crop-type">Wheat</span>
-                    <span class = "yield-number">3.3</span> 
-                    <span class = "revenue-number">201k</span> 				
+                    <span class="crop-type">Wheat</span>
+                    <span class="yield-number">3.3</span> 
+                    <span class="revenue-number">201k</span> 				
                 </li>
                 <li>
-                    <span class = "crop-type">Rye</span>
-                    <span class = "yield-number">2.1</span> 
-                    <span class = "revenue-number">122k</span> 				
+                    <span class="crop-type">Rye</span>
+                    <span class="yield-number">2.1</span> 
+                    <span class="revenue-number">122k</span> 				
                 </li>
             </ul>
         </div>
@@ -89,6 +91,11 @@
     <script src="https://maps.googleapis.com/maps/api/js?libraries=drawing"></script>
     <script>
        
+        if($(window).width() == 320){
+            $('#map-canvas').insertBefore($('#insight-container'));
+            $('#drag-down').show();
+        }
+        
         $('#insight-container').perfectScrollbar();
         
         $('#popup-close').click(function(){
@@ -103,7 +110,7 @@
         function initialize() {
 
 
-            var hum, temperature, lum, area;
+            var hum, temperature, lum, area, windspeed, airquality;
 
             var mapOptions = {
                 center: new google.maps.LatLng(51.59,-1.27),
@@ -119,9 +126,9 @@
             var zoomControls = document.createElement('div');
             var zoomControlsIn = document.createElement('div');
             var zoomControlsOut = document.createElement('div');
-            zoomControls.id = "zoom-controls";
-            zoomControlsIn.id = "zoom-in";
-            zoomControlsOut.id = "zoom-out";
+            zoomControls.id="zoom-controls";
+            zoomControlsIn.id="zoom-in";
+            zoomControlsOut.id="zoom-out";
             zoomControlsIn.innerHTML = '<img src="img/zoom-in.png" alt="Zoom in" title="Zoom in" />';
             zoomControlsOut.innerHTML = '<img src="img/zoom-out.png" alt="Zoom out" title="Zoom out" />';
             zoomControls.appendChild(zoomControlsIn);
@@ -141,10 +148,10 @@
             var drawControls = document.createElement('div');
             var drawControlsPan = document.createElement('div');
             var drawControlsDraw = document.createElement('div');
-            drawControls.id = "draw-controls";
-            drawControlsPan.id = "draw-controls-pan";
+            drawControls.id="draw-controls";
+            drawControlsPan.id="draw-controls-pan";
             drawControlsPan.className = "active";
-            drawControlsDraw.id = "draw-controls-draw";
+            drawControlsDraw.id="draw-controls-draw";
             drawControlsPan.innerHTML = '<img src="img/pan.png" alt="Pan" title="Pan map" />';
             drawControlsDraw.innerHTML = '<img src="img/draw.png" alt="Draw" title="Draw a shape" />';
             drawControls.appendChild(drawControlsPan);
@@ -156,10 +163,10 @@
             var mapControls = document.createElement('div');
             var mapControlsMap = document.createElement('span');
             var mapControlsSatellite = document.createElement('span');
-            mapControls.id = "map-controls";
-            mapControlsMap.id = "map-controls-map";
+            mapControls.id="map-controls";
+            mapControlsMap.id="map-controls-map";
             mapControlsMap.className = "active";
-            mapControlsSatellite.id = "map-controls-satellite";
+            mapControlsSatellite.id="map-controls-satellite";
             mapControlsMap.innerHTML = 'MAP';
             mapControlsSatellite.innerHTML = 'SATELLITE';
             mapControls.appendChild(mapControlsMap);
@@ -190,8 +197,7 @@
 
                 var namesrevenue=namesyield;
                 var swapped;
-                console.log(namesyield);
-                console.log(yield);
+                
                 do {
                     swapped = false;
 
@@ -207,11 +213,7 @@
                         }
                     }
                 } while (swapped);
-                console.log(namesyield);
-                console.log(yield);
-                console.log("\n")
-                console.log(namesrevenue);
-                console.log(revenue);
+
                 do {
                     swapped = false;
 
@@ -227,6 +229,8 @@
                         }
                     }
                 } while (swapped);
+                console.log(namesyield);
+                console.log(yield);
                 console.log(namesrevenue);
                 console.log(revenue);
             }
@@ -261,26 +265,23 @@
                     counter++;
                 }
                 query=query.substring(0,query.length-3)+")&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
-                // console.log(query);
 
                  $.ajax({
                     url: query,
                     dataType: "jsonp",
                     success: function (data) {
-                    //console.log(data);
-                    var one=data["query"];
-                    var two=one["results"];
-                    var three=two["quote"];
-                    console.log(three);
-                    var c=0;
-                    for(j in three){
-                        var obj = three[j];
-                        var ask=parseFloat(obj["Ask"]);
-                        revenue[c]=(ask*yield[c]/1000.0).toFixed(2);
-                        c++;
-                    }
-                    //console.log(revenue);
-                    queryfinished(names, revenue, yield);
+                        var one=data["query"];
+                        var two=one["results"];
+                        var three=two["quote"];
+                        console.log(three);
+                        var c=0;
+                        for(j in three){
+                            var obj = three[j];
+                            var ask=parseFloat(obj["Ask"]);
+                            revenue[c]=(ask*yield[c]/1000.0).toFixed(2);
+                            c++;
+                        }
+                        queryfinished(names, revenue, yield);
                     }
                 });
 
@@ -292,16 +293,29 @@
                 $('#draw-controls-draw').removeClass('active');
                 $('#draw-controls-pan').addClass('active');
                 
-                var coordinates = (polygon.getPath().getArray());
-                console.log(coordinates);
+                //var coordinates = (polygon.getPath().getArray());
                 
-                if(!currentPolygon){                               
-                    $('#map-canvas').animate({width: "-=320px"}, 500);
-                    $('#loading-container').fadeIn();
-                    $('#insight-container').animate({width: "320px"}, 500, function(){
-                        setTimeout(function(){ $('#loading-container').fadeOut(200); $('#insight-container-inner').fadeIn(500) }, 1500);
-                    });
-                    
+                if(!currentPolygon){                 
+                
+                    if($(window).width() != 320){
+                        $('#map-canvas').animate({width: "-=320px"}, 500);
+                        $('#loading-container').fadeIn();
+                        $('#insight-container').animate({width: "320px"}, 500, function(){
+                            setTimeout(function(){ $('#loading-container').fadeOut(200); $('#insight-container-inner').fadeIn(500) }, 1500);
+                        });
+                    }
+                    else {
+                        $('#map-canvas').animate({height: "200px"}, 500, function(){
+                            $('#loading-container').fadeIn();    
+                            setTimeout(function(){ $('#loading-container').fadeOut(200); $('#insight-container-inner').fadeIn(500) }, 1500);
+                        });
+                    }
+                }
+                else {
+                    if($(window).width() == 320){
+                        $('#map-canvas').animate({height: "200px"}, 500);
+                        $('#drag-up').hide();
+                    }
                 }
                 
                 currentPolygon = polygon;
@@ -318,25 +332,22 @@
                 lon=lon/i;
                 console.log(lat);
                 console.log(lon);
-                 area=(google.maps.geometry.spherical.computeArea(polygon.getPath())/4046.9).toFixed(2);
-                var tmpurl="https://api.forecast.io/forecast/9ac2823be7891b91dfcac3cf3b2395e3/"+lat.toString()+","+lon.toString()+"?units=si";
+                area = (google.maps.geometry.spherical.computeArea(polygon.getPath())/4046.9).toFixed(2);
+                var tmpurl = "https://api.forecast.io/forecast/9ac2823be7891b91dfcac3cf3b2395e3/"+lat.toString()+","+lon.toString()+"?units=si";
 
-                //console.log(tmpurl);
                 $.ajax({
-                    url: tmpurl,
-                    dataType: "jsonp",
-                    success: function (data) {
-                    console.log(data);
-                    var cur=data["currently"];
-                    temperature=parseFloat(cur["temperature"]);
-                    lum=1.0-parseFloat(cur["cloudCover"]);
-                    hum=parseFloat(cur["humidity"]);
-                    console.log("temp1:"+temperature);
-                    callbackfinished();
-                    }
-                });
-
-               
+                        url: tmpurl,
+                        dataType: "jsonp",
+                        success: function (data) {                        
+                            var cur = data["currently"];
+                            temperature = parseFloat(cur["temperature"]);
+                            lum = 1.0 - parseFloat(cur["cloudCover"]);
+                            hum = parseFloat(cur["humidity"]);
+                            windspeed = parseFloat(cur["windSpeed"]);
+                            airquality = parseFloat(cur['ozone']);
+                            callbackfinished();
+                        }
+                });              
             });
         }
         
@@ -348,6 +359,10 @@
             $(this).addClass('active');
             if(currentPolygon) currentPolygon.setMap(null);
             $('#draw-controls-pan').removeClass("active");
+            
+            if($(window).width() == 320 && currentPolygon){
+                $('#map-canvas').animate({height: "100%"}, 500, function(){ $('#drag-up').show(); });
+            }
         });
         
         $('#map-canvas').on('click', '#draw-controls-pan', function(){
@@ -366,6 +381,16 @@
             map.setMapTypeId(google.maps.MapTypeId.HYBRID);
             $(this).addClass('active');
             $('#map-controls-map').removeClass("active");
+        });
+        
+        $('#drag-down').click(function(){
+            $('#map-canvas').animate({height: "100%"}, 500, function(){ $('#drag-up').show(); });
+            
+        });
+       
+        $('#drag-up').click(function(){
+            $('#map-canvas').animate({height: "200px"}, 500);
+            $('#drag-up').hide();
         });
         
         $(window).on("resize",function(){
