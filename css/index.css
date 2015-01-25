@@ -190,6 +190,18 @@ ul {
   font-weight: 700;
   font-size: 30px;
 }
+#insight-container .stats li .estimate-yield,
+#insight-container .stats li .estimate-revenue {
+  cursor: pointer;
+}
+#insight-container .stats li .estimate-yield:not(.active) img,
+#insight-container .stats li .estimate-revenue:not(.active) img {
+  display: none;
+}
+#insight-container .stats li .estimate-yield:not(.active):hover img,
+#insight-container .stats li .estimate-revenue:not(.active):hover img {
+  display: inline-block;
+}
 #map-canvas {
   width: 100%;
 }
