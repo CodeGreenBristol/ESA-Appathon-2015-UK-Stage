@@ -99,9 +99,7 @@
                 cropArray.sort(function(a, b){ return  b[2] - a[2]; });
             }
             else {
-                cropArray.sort(function(a, b){
-                    cropArray.sort(function(a, b){ return b[1] - a[1]; });
-                });
+                cropArray.sort(function(a, b){ return b[1] - a[1]; });
             }
             
             $('#crop-div .crop-li').remove();
